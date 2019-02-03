@@ -1,0 +1,70 @@
+rule CreateAssetThruTxn {
+    description: "Allow creating new messages from broadcast transaction"
+  	participant(p): "ANY"
+  	operation: CREATE
+    resource(r) : "org.public.Message"
+  	transaction(br) : "org.public.Broadcast"
+    condition:(true)
+    action: ALLOW 
+}
+
+rule DisableOtherAssetCreationWays {
+    description: "Disable Other ways of creating new messages"
+  	participant: "ANY"
+  	operation: CREATE
+    resource : "org.public.Message"
+    condition: (true)
+  	action: DENY 
+}
+
+rule PreventUsersFromCreatingUsers {
+    description: "Prevent Users From Creating Users"
+  	participant: "org.public.User"
+  	operation: CREATE
+    resource : "org.public.User"
+    condition: (true)
+  	action: DENY 
+}
+
+rule ParticipantCanUpdateItself {
+    description: "Participants Can update itself"
+    participant(p): "org.public.User"
+    operation: UPDATE
+    resource(r): "org.public.User"
+    condition:(p.getIdentifier()==r.getIdentifier())
+    action: ALLOW
+}
+
+rule ParticipantsCannotSeeEachOther {
+    description: "Participants Cannot See Each Other to protect their signatures"
+    participant: "org.public.User"
+    operation: READ
+    resource: "org.public.User"
+    action: DENY
+}
+
+
+rule EveryoneCanSeeMessages {
+    description: "Grant users read access to Message resources"
+    participant: "ANY"
+    operation: READ
+    resource: "org.public.Message"
+    action: ALLOW
+}
+
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}

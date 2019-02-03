@@ -1,0 +1,23 @@
+query listAllMessages {
+  description: "list all messages broadcasted on the network"
+  statement: 
+    SELECT org.public.Message
+    ORDER BY [msgId DESC] 
+}
+
+
+query listMessagesForUserID {
+  description: "list all messages broadcasted on the network by a user knowing his userID"
+  statement: 
+    SELECT org.public.Message
+    WHERE (ownerID == _$userID)
+    ORDER BY [msgId DESC] 
+}
+
+query listMessagesForUserName {
+  description: "list all messages broadcasted on the network by a user knowing his userName"
+  statement: 
+    SELECT org.public.Message
+    WHERE (ownerName == _$username)
+    ORDER BY [msgId DESC] 
+} 
