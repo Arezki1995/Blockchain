@@ -89,7 +89,7 @@ PeerOrgs:
     # name collisions
     # ---------------------------------------------------------------------------
     Template:
-      Count: 1
+      Count: 2
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
       # SANS:
@@ -110,6 +110,6 @@ PeerOrgs:
     Domain: min2.p22network.com
     EnableNodeOUs: false
     Template:
-      Count: 1
+      Count: 2
     Users:
       Count: 2
