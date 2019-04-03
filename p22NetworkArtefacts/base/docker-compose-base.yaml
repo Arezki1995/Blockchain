@@ -1,7 +1,9 @@
+# Container parameters volumes and configuration
+# I mounted the certificates and network artifacts on the adequate peers
+
 version: '2'
-
 services:
-
+##########################################################
   orderer.p22network.com:
     container_name: orderer.p22network.com
     image: hyperledger/fabric-orderer:$IMAGE_TAG
@@ -22,12 +24,13 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes:
-    - ../p22ChannelArtefacts/p22Genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-    - ../p22CryptoMaterial/ordererOrganizations/p22network.com/orderers/orderer.p22network.com/msp:/var/hyperledger/orderer/msp
-    - ../p22CryptoMaterial/ordererOrganizations/p22network.com/orderers/orderer.p22network.com/tls/:/var/hyperledger/orderer/tls
+    - ../p22ChannelArtefacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ../crypto-config/ordererOrganizations/p22network.com/orderers/orderer.p22network.com/msp:/var/hyperledger/orderer/msp
+    - ../crypto-config/ordererOrganizations/p22network.com/orderers/orderer.p22network.com/tls/:/var/hyperledger/orderer/tls
     - orderer.p22network.com:/var/hyperledger/production/orderer
     ports:
       - 7050:7050
+##########################################################
 
   peer0.min1.p22network.com:
     container_name: peer0.min1.p22network.com
@@ -37,18 +40,18 @@ services:
     environment:
       - CORE_PEER_ID=peer0.min1.p22network.com
       - CORE_PEER_ADDRESS=peer0.min1.p22network.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.min1.p22network.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.min1.p22network.com:7051
-      - CORE_PEER_LOCALMSPID=ministry1MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.min1.p22network.com:7051
+      - CORE_PEER_LOCALMSPID=Ministry1MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../p22CryptoMaterial/peerOrganizations/min1.p22network.com/peers/peer0.min1.p22network.com/msp:/etc/hyperledger/fabric/msp
-        - ../p22CryptoMaterial/peerOrganizations/min1.p22network.com/peers/peer0.min1.p22network.com/tls:/etc/hyperledger/fabric/tls
+        - ../crypto-config/peerOrganizations/min1.p22network.com/peers/peer0.min1.p22network.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/min1.p22network.com/peers/peer0.min1.p22network.com/tls:/etc/hyperledger/fabric/tls
         - peer0.min1.p22network.com:/var/hyperledger/production
     ports:
       - 7051:7051
       - 7053:7053
-
+##########################################################
   peer1.min1.p22network.com:
     container_name: peer1.min1.p22network.com
     extends:
@@ -58,18 +61,17 @@ services:
       - CORE_PEER_ID=peer1.min1.p22network.com
       - CORE_PEER_ADDRESS=peer1.min1.p22network.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.min1.p22network.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.min1.p22network.com:7051
-      - CORE_PEER_LOCALMSPID=ministry1MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.min1.p22network.com:7051
+      - CORE_PEER_LOCALMSPID=Ministry1MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../p22CryptoMaterial/peerOrganizations/min1.p22network.com/peers/peer1.min1.p22network.com/msp:/etc/hyperledger/fabric/msp
-        - ../p22CryptoMaterial/peerOrganizations/min1.p22network.com/peers/peer1.min1.p22network.com/tls:/etc/hyperledger/fabric/tls
+        - ../crypto-config/peerOrganizations/min1.p22network.com/peers/peer1.min1.p22network.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/min1.p22network.com/peers/peer1.min1.p22network.com/tls:/etc/hyperledger/fabric/tls
         - peer1.min1.p22network.com:/var/hyperledger/production
-
     ports:
       - 8051:7051
       - 8053:7053
-
+#########################################################
   peer0.min2.p22network.com:
     container_name: peer0.min2.p22network.com
     extends:
@@ -79,17 +81,17 @@ services:
       - CORE_PEER_ID=peer0.min2.p22network.com
       - CORE_PEER_ADDRESS=peer0.min2.p22network.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.min2.p22network.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.min2.p22network.com:7051
-      - CORE_PEER_LOCALMSPID=ministry2MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.min2.p22network.com:7051
+      - CORE_PEER_LOCALMSPID=Ministry2MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../p22CryptoMaterial/peerOrganizations/min2.p22network.com/peers/peer0.min2.p22network.com/msp:/etc/hyperledger/fabric/msp
-        - ../p22CryptoMaterial/peerOrganizations/min2.p22network.com/peers/peer0.min2.p22network.com/tls:/etc/hyperledger/fabric/tls
+        - ../crypto-config/peerOrganizations/min2.p22network.com/peers/peer0.min2.p22network.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/min2.p22network.com/peers/peer0.min2.p22network.com/tls:/etc/hyperledger/fabric/tls
         - peer0.min2.p22network.com:/var/hyperledger/production
     ports:
       - 9051:7051
       - 9053:7053
-
+##########################################################
   peer1.min2.p22network.com:
     container_name: peer1.min2.p22network.com
     extends:
@@ -99,13 +101,13 @@ services:
       - CORE_PEER_ID=peer1.min2.p22network.com
       - CORE_PEER_ADDRESS=peer1.min2.p22network.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.min2.p22network.com:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.min2.p22network.com:7051
-      - CORE_PEER_LOCALMSPID=ministry2MSP
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.min2.p22network.com:7051
+      - CORE_PEER_LOCALMSPID=Ministry2MSP
     volumes:
         - /var/run/:/host/var/run/
-        - ../p22CryptoMaterial/peerOrganizations/min2.p22network.com/peers/peer1.min2.p22network.com/msp:/etc/hyperledger/fabric/msp
-        - ../p22CryptoMaterial/peerOrganizations/min2.p22network.com/peers/peer1.min2.p22network.com/tls:/etc/hyperledger/fabric/tls
+        - ../crypto-config/peerOrganizations/min2.p22network.com/peers/peer1.min2.p22network.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/min2.p22network.com/peers/peer1.min2.p22network.com/tls:/etc/hyperledger/fabric/tls
         - peer1.min2.p22network.com:/var/hyperledger/production
-    ports:
+    ports:  
       - 10051:7051
       - 10053:7053
