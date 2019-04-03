@@ -24,7 +24,7 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   - Name: Min1
     Domain: min1.p22network.com
-    EnableNodeOUs: false
+    EnableNodeOUs: true
 
     # ---------------------------------------------------------------------------
     # "CA"
@@ -108,7 +108,7 @@ PeerOrgs:
   # ---------------------------------------------------------------------------
   - Name: Min2
     Domain: min2.p22network.com
-    EnableNodeOUs: false
+    EnableNodeOUs: true
     Template:
       Count: 2
     Users:
