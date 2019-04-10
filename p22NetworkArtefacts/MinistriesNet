@@ -149,7 +149,7 @@ function generateChannelArtifacts() {
   echo "#################################################################"
   echo "### Generating channel configuration transaction 'channel.tx' ###"
   echo "#################################################################"
-  set -x
+  set -x 
   configtxgen -profile InterMinistryChannel -outputCreateChannelTx ./p22ChannelArtefacts/channel.tx -channelID $CHANNEL_NAME
   res=$?
   set +x
@@ -232,24 +232,16 @@ elif [ "$MODE" == "down" ]; then
 elif [ "$MODE" == "generate" ]; then
   EXPMODE="Generating certs and genesis block"
 else
-  
   exit 1
 fi
 
-while getopts "h?c:t:d:f:s:l:i:o:v" opt; do
+while getopts "h?c:f:s:l:o" opt; do
   case "$opt" in
   h | \?)
-    
     exit 0
     ;;
   c)
     CHANNEL_NAME=$OPTARG
-    ;;
-  t)
-    CLI_TIMEOUT=$OPTARG
-    ;;
-  d)
-    CLI_DELAY=$OPTARG
     ;;
   f)
     COMPOSE_FILE=$OPTARG
@@ -260,21 +252,14 @@ while getopts "h?c:t:d:f:s:l:i:o:v" opt; do
   l)
     LANGUAGE=$OPTARG
     ;;
-  i)
-    IMAGETAG=$(go env GOARCH)"-"$OPTARG
-    ;;
    o)
     CONSENSUS_TYPE=$OPTARG
-    ;;
-  v)
-    VERBOSE=true
     ;;
   esac
 done
 
 
 # Announce what it is going to do 
-
 if [ "${IF_COUCHDB}" == "couchdb" ]; then
   echo
   echo "${EXPMODE} for channel '${CHANNEL_NAME}' with CLI timeout of '${CLI_TIMEOUT}' seconds and CLI delay of '${CLI_DELAY}' seconds and using database '${IF_COUCHDB}'"
