@@ -11,6 +11,34 @@ networks:
 
 services:
 ##########################################################
+#adding a certificate authority for Min1
+  ca.min1.p22network.com:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.min1.p22network.com
+
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.min1.p22network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3ee81323a141a0cfd7e5071b75621b1abbf648eb610fe37b17caeb8a88872cd0_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/min1.p22network.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.min1.p22network.com
+##########################################################
+#adding a certificate authority for Min2
+  ca.min2.p22network.com:
+    image: hyperledger/fabric-ca:latest
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.min2.p22network.com
+
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.min2.p22network.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/0e7aa85027f1bdb5953b69e781f98e7084ec4178575af645464344b8532683aa_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/min2.p22network.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.min2.p22network.com
+##########################################################
   orderer.p22network.com:
     extends:
       file:   base/docker-compose-base.yaml
