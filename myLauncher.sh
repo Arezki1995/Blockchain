@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PROJECT_PATH=/media/arezki/STORE/Blockchain
+export PROJECT_PATH=~/Blockchain
 export DIR=$PROJECT_PATH/fabric-dev-servers/fabric-scripts/hlfv12
 export DOCKER_FILE=$DIR/composer/docker-compose.yml
 export FABRIC_START_TIMEOUT=10
