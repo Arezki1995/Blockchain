@@ -1,0 +1,11 @@
+fabric-dev-servers/*
+TEMPLATES/*
+fabric-tools/*
+p22NetworkArtefacts/chaincode/abac
+Network/*
+testNet/*
+p22NetworkArtefacts/mychaincode/*
+p22NetworkArtefacts/docker-compose-couch.yaml
+p22NetworkArtefacts/myChaincode/
+p22NetworkArtefacts/p22ConnectionProfile.json
+p22NetworkArtefacts/.gradle/
