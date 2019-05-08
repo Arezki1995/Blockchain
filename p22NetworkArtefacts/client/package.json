@@ -1,0 +1,28 @@
+{
+	"name": "p22client",
+	"version": "2.0.0",
+	"description": "simplest Public announcement network client",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint ."
+	},
+	"dependencies": {
+		"fabric-ca-client": "^1.2.0",
+		"fabric-client": "^1.2.0",
+		"grpc": "^1.6.0"
+	},
+	"devDependencies": {
+		"eslint": "^4.13.1",
+		"eslint-plugin-react": "^7.9.1"
+	},
+	"author": "Arezki AIT MOUHEB",
+	"license": " ",
+	"keywords": [
+		"Hyperledger",
+		"Fabric",
+		"P22",
+		"Message",
+		"IMA4"
+	]
+}

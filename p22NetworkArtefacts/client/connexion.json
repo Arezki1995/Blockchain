@@ -1,0 +1,65 @@
+{
+    "name": "p22network",
+    "x-commitTimeout": 300,
+    "version": "2.0.0",
+    "client": {
+        "organization": "Min1",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300",
+                    "eventHub": "300",
+                    "eventReg": "300"
+                },
+                "orderer": "300"
+            }
+		}
+    },
+    "channels": {
+        "composerchannel": {
+            "orderers": [
+                "orderer.p22network.com"
+            ],
+            "peers": {
+                "peer0.min1.p22network.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "Min1": {
+            "mspid": "Ministry1MSP",
+            "peers": [
+				"peer0.min1.p22network.com"
+            ],
+            "certificateAuthorities": [
+                "ca.min1.p22network.com"
+			]
+        }
+    },
+    "orderers": {
+        "orderer.p22network.com": {
+			"url": "grpc://localhost:7050",
+		"tlsCACerts": {
+			"pem": "-----BEGIN CERTIFICATE-----MIICTzCCAfagAwIBAgIRAPhN72evSmvN+qt8io5xMsAwCgYIKoZIzj0EAwIwcjELMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xFzAVBgNVBAoTDnAyMm5ldHdvcmsuY29tMR0wGwYDVQQDExR0bHNjYS5wMjJuZXR3b3JrLmNvbTAeFw0xOTA0MDMxNDIzMDBaFw0yOTAzMzExNDIzMDBaMHIxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRcwFQYDVQQKEw5wMjJuZXR3b3JrLmNvbTEdMBsGA1UEAxMUdGxzY2EucDIybmV0d29yay5jb20wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASq2+AL4JV4wbtFkwsLma6GTEZ/9Cl5NRl+keVC4RdZCLM46ftIBKqfs1AeqtYIkxE5WmY5RxejhuHNgGuHquCno20wazAOBgNVHQ8BAf8EBAMCAaYwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMA8GA1UdEwEB/wQFMAMBAf8wKQYDVR0OBCIEIAwdl8sgRgFcFWxUDe5SkHYt/UV9uHBQGwKi8ssxGJe7MAoGCCqGSM49BAMCA0cAMEQCID2kgkn2vq4uSpvRZTFUsjVvndZP0gzV2jPYnGxjVeerAiA+wbZWi7pQSeY97lmd+r0qguR6ZBj9TBKl+6Io85+mNA==-----END CERTIFICATE-----"
+			}	
+		}
+    },
+    "peers": {
+        "peer0.min1.p22network.com": {
+            "url": "grpc://localhost:7051",
+			"tlsCACerts": {
+				"pem": "-----BEGIN CERTIFICATE-----MIICYzCCAgmgAwIBAgIQerSREdvTGro2sr8PG9/iuzAKBggqhkjOPQQDAjB8MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEcMBoGA1UEChMTbWluMS5wMjJuZXR3b3JrLmNvbTEiMCAGA1UEAxMZdGxzY2EubWluMS5wMjJuZXR3b3JrLmNvbTAeFw0xOTA0MDMxNDIzMDBaFw0yOTAzMzExNDIzMDBaMHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRwwGgYDVQQKExNtaW4xLnAyMm5ldHdvcmsuY29tMSIwIAYDVQQDExl0bHNjYS5taW4xLnAyMm5ldHdvcmsuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEwpqZa9v/viS9MyhRjuCpg6Pcqnnm93zPhTpyMyrEKskbEZwnyDVYA6uqAJKyF662e6MNVCfp3xdu+2ADLwVMr6NtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCCt6aD6+7Tld5RGXH7jVxU/xR/9MW3NS0lqRnYXM/IxlTAKBggqhkjOPQQDAgNIADBFAiEA25Cmq4eHEEMliLy4T/aqGZQu7im3leCstRvEWiA8To0CIHc4GgG5HrBzkzedx7rxKXbW/GEASoCTgbAZbBupx8Px-----END CERTIFICATE-----"
+			}	
+		}
+
+    },
+    "certificateAuthorities": {
+        "ca.min1.p22network.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca.min1.p22network.com"
+		},
+		"tlsCACerts": {
+			"pem": "-----BEGIN CERTIFICATE-----MIICXTCCAgOgAwIBAgIQQZk2R2M9IAVmih/4wQCbATAKBggqhkjOPQQDAjB5MQswCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEcMBoGA1UEChMTbWluMS5wMjJuZXR3b3JrLmNvbTEfMB0GA1UEAxMWY2EubWluMS5wMjJuZXR3b3JrLmNvbTAeFw0xOTA0MDMxNDIzMDBaFw0yOTAzMzExNDIzMDBaMHkxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRwwGgYDVQQKExNtaW4xLnAyMm5ldHdvcmsuY29tMR8wHQYDVQQDExZjYS5taW4xLnAyMm5ldHdvcmsuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEicRXgcSWWJgEyLSCceGkdUrrf8+GwW3mPpQdRbh/cBQ9YdoGRkieRsndGbulpWKrret8gNr/xg5YcYJot5GIp6NtMGswDgYDVR0PAQH/BAQDAgGmMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH/MCkGA1UdDgQiBCA+6BMjoUGgz9flBxt1Yhsau/ZI62EP43sXyuuKiIcs0DAKBggqhkjOPQQDAgNIADBFAiEAyiE+cHkYpkoLYYCbebEyRvTUbFbFysiMaduvucnfarICIGORzZ/p9MEBAx71gX/gtIcUBCpj+JvHLQs6PowvYCte-----END CERTIFICATE-----"
+		}	
+    }
+}
