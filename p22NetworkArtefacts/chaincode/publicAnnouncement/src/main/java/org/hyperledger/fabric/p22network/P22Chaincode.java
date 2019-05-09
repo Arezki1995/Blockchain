@@ -59,8 +59,8 @@ public class P22Chaincode extends ChaincodeBase {
         //CREATE WRAPPER USER JSON OBJECT
         JSONObject msg = new JSONObject();
         msg.put("TIME",TimeStamp);
-        msg.put("CONTENT",TimeStamp);
-        msg.put("TITLE",TimeStamp);
+        msg.put("CONTENT",content);
+        msg.put("TITLE",title);
         msg.put("ID",Id);
         return msg;
     }    
@@ -76,7 +76,7 @@ public class P22Chaincode extends ChaincodeBase {
         List<String> args = stub.getParameters();
 
         if (args.size() != 4) {
-            return newErrorResponse("Incorrect number of arguments. Expecting Id, UserName and UserMinistry");
+            return newErrorResponse("Incorrect number of arguments. Expecting: newAdminId, AdminName, AdminPwd, AdminAffiliation");
         }
 
             adminID  = args.get(0);
@@ -191,11 +191,11 @@ public class P22Chaincode extends ChaincodeBase {
         String val	= stub.getStringState(id);
         _logger.info("========================= > verify existence:{"+val+"}");
 
-        /* 
-        if (val.length()<=1) {
-            return newErrorResponse(String.format("Error: user with Id: %s already exists", id));
+        
+        if (!val.equals("")){
+            return newErrorResponse(String.format("Error: USER WITH ID: [%s] ALREADY EXISTS", id));
         }   
-        */
+        
 
         //INITIATE USER
         JSONObject user = makeUser(userName, userPwd, "Client", userMinistry, "null");
@@ -220,19 +220,19 @@ public class P22Chaincode extends ChaincodeBase {
 
         // VERIFY IT IS FROM ADMIN
         if ( !(args.get(1).equals(adminID)) || !(args.get(2).equals(adminPWD)) ) {
-            return newErrorResponse(String.format("Error: YOU DO NOT HAVE ADMIN RIGHTS TO DELETE USERS"));
+            return newErrorResponse(String.format("\nError: YOU DO NOT HAVE ADMIN RIGHTS TO DELETE USERS"));
         }   
 
         //DO NOT ALLOW ADMIN TO DELETE ADMIN
         if ( (args.get(0).equals(adminID)) ) {
-            return newErrorResponse(String.format("Error: CANNOT DELETE ADMIN"));
+            return newErrorResponse(String.format("\nError: CANNOT DELETE ADMIN"));
         } 
 
         String key = args.get(0);
 
         String val	= stub.getStringState(key);
-        if (val == null) {
-            return newErrorResponse(String.format("Error: use with id %s doesn't exit", key));
+        if (val.equals("")) {
+            return newErrorResponse(String.format("\nError: use with id %s doesn't exit", key));
         }
         
         // Delete the key from the state in ledger
@@ -244,14 +244,14 @@ public class P22Chaincode extends ChaincodeBase {
     // Find a user entry in storage
     private Response queryUser(ChaincodeStub stub, List<String> args) {
         if (args.size() != 1) {
-            return newErrorResponse("Incorrect number of arguments. Expecting name of the person to query");
+            return newErrorResponse("Incorrect number of arguments. Expecting: Id");
         }
         String key = args.get(0);
 
         String val	= stub.getStringState(key);
 
-        if (val == null) {
-            return newErrorResponse(String.format("Error: state for %s is null", key));
+        if (val.equals("")) {
+            return newErrorResponse(String.format("\nError: USER WITH ID [%s] DOES NOT EXIST", key));
         }
     
         JSONObject user = new JSONObject(val);
@@ -270,7 +270,8 @@ public class P22Chaincode extends ChaincodeBase {
     ///////////////////////////////// broadcast a Message  ////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     private Response broadcastMsg(ChaincodeStub stub, List<String> args) {
-        _logger.info("broadcast launched");
+        
+        _logger.info("==================================> broadcastMsg launched");
         if (args.size() != 4) {
             return newErrorResponse("Incorrect number of arguments. Expecting: UserId , userPWD,  MsgTitle , MsgContent");
         }
@@ -279,21 +280,22 @@ public class P22Chaincode extends ChaincodeBase {
         String msgTitle   = args.get(2);
         String msgContent = args.get(3);
 
-        
-   
 
         //VERIFY EXISTANCE
         String value = stub.getStringState(id);
-        _logger.info("[broadcastMsg] id search string result:"+value);
 
-        if(value==null){
+        _logger.info("[broadcastMsg] id search string result:"+value.toString());
+
+        if(value.equals("")){
             return newErrorResponse(String.format("\nError: USER WITH ID [%s] DOES NOT EXIST\n", id));
         }else{
+
             //JSONify the String
+
             JSONObject user = new JSONObject(value);
             String internalPwd = ((JSONObject) user.get("Identity")).get("PWD").toString();
             if(!internalPwd.equals(UserPWD)){
-                return newErrorResponse(String.format("Error: WRONG PASSWORD. NO RIGHTS TO PUBLISH"));
+                return newErrorResponse(String.format("\nError: WRONG PASSWORD. NO RIGHTS TO PUBLISH"));
             }
 
             //Adding the msg to the JSON array of messages representing the list broadcasted by this user
@@ -311,6 +313,7 @@ public class P22Chaincode extends ChaincodeBase {
         
             //return newErrorResponse();
             _logger.info("Response: Message broadcasted Successfully");
+            
             return newSuccessResponse("Message broadcasted Successfully:\n", ByteString.copyFrom(user.toString(), UTF_8).toByteArray());
         }
     }
@@ -326,7 +329,7 @@ public class P22Chaincode extends ChaincodeBase {
         String userID = args.get(0);
 
         String val	= stub.getStringState(userID);
-        if (val == null) {
+        if (val.equals("")) {
             return newErrorResponse(String.format("\nError: USER WITH ID [%s] DOES NOT EXIST\n", userID));
         }else{
             //JSONify the String
