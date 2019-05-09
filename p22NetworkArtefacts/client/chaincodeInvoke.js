@@ -65,7 +65,7 @@ Fabric_Client.newDefaultKeyValueStore({
   var request = {
           chaincodeId: 'p22CC',
           fcn: 'invoke',
-          args: ["addUser","001","Arezki","MIN-01"],
+          args: ["broadcastMsg","001","passwdofuser1","Hello from the outside","If it works you have finished"],
           chainId: 'mychannel',
           txId: tx_id
       };
