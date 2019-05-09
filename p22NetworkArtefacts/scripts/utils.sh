@@ -165,7 +165,7 @@ upgradeChaincode() {
   setGlobals $PEER $MIN
 
   set -x
-  peer chaincode upgrade -o orderer.p22network.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "AND ('Ministry1MSP.peer','Ministry2MSP.peer','Org3MSP.peer')"
+  peer chaincode upgrade -o orderer.p22network.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c '{"Args":["init","a","90","b","210"]}' -P "AND ('Ministry1MSP.peer','Ministry2MSP.peer')"
   res=$?
   set +x
   cat log.txt
