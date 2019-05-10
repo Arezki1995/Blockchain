@@ -19,13 +19,13 @@ echo
 echo "Which version is it?"
 #read VER
 VER=v1.0
-
+sleep 5
 for MIN in 1 2 ; do 
     for PEER in 0 1 ; do
         
         echo
         echo "####################### INSTALLING chaicode on >>> peer${PEER}.min${MIN}.p22network.com"
-        #sleep 5
+        sleep 5
         
         setGlobals $PEER $MIN
         
@@ -38,7 +38,7 @@ done
 
 setGlobals 0 1
 echo "####################### INSTANTIATING chaicode on >>> peer${PEER}.min${MIN}.p22network.com"
-#sleep 5
+sleep 5
 
 # INIT FUNCTION CREATES ADMIN Expecting: newAdminId, AdminName, AdminPwd, AdminAffiliation
 peer chaincode instantiate -o orderer.p22network.com:7050 --tls true --cafile $ORDERER_CA -C mychannel -n p22CC -l java -v  $VER -c '{"Args":["init","000", "Arezki", "passwdofarezki", "Min1"]}' -P "OR ('Ministry1MSP.peer','Ministry2MSP.peer')"
@@ -46,9 +46,9 @@ echo
 
 
 
-echo "Installation Done"
-echo "Init: Admin User created"
-
+echo "[OK] Installation Done"
+echo "[OK] Init: Admin User created"
+echo 
 #Endorsement policy syntax
 
 # In the CLI, a simple language is used to express policies in terms of boolean expressions over principals.

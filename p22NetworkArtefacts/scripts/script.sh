@@ -10,7 +10,7 @@ echo "| (       /   _/   /   _/        | | \   || (         | |   ";
 echo "| )      (   (__/\(   (__/\      | )  \  || (____/\   | |   ";
 echo "|/       \_______/\_______/      |/    )_)(_______/   )_(   ";
 echo "                                                            ";
-echo "               P22 NETWORK END TO END TEST"
+echo "               P22 NETWORK END TO END"
 echo
 CHANNEL_NAME="$1"
 DELAY="$2"
@@ -36,7 +36,7 @@ if [ "$LANGUAGE" = "java" ]; then
 fi
 
 echo "Channel name : "$CHANNEL_NAME
-
+sleep 5
 # import utils
 . scripts/utils.sh
 
@@ -54,7 +54,9 @@ createChannel() {
 		res=$?
 				set +x
 	fi
-	cat log.txt
+	
+	#cat log.txt
+	
 	verifyResult $res "Channel creation failed"
 	echo "===================== Channel '$CHANNEL_NAME' created ===================== "
 	echo
@@ -73,23 +75,26 @@ joinChannel () {
 
 ## Create channel
 echo "Creating channel..."
+sleep 5
 createChannel
 
 ## Join all the peers to the channel
 echo "Having all peers join the channel..."
+sleep 5
 joinChannel
 
 ## Set the anchor peers for each min in the channel
 echo "Updating anchor peers for min1..."
+sleep 5
 updateAnchorPeers 0 1
 echo "Updating anchor peers for min2..."
+sleep 5
 updateAnchorPeers 0 2
 
 
 echo
-echo "========= All GOOD, END 2 END test execution completed =========== "
+echo "========= All GOOD execution completed =========== "
 echo
-
 echo
 echo " _____   _   _   ____   "
 echo "| ____| | \ | | |  _ \  "

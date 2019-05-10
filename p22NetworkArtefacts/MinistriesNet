@@ -72,11 +72,16 @@ function networkUp() {
 ##################################################################################################################
 # now run the end to end script
 testScrpit(){
+    echo "Launching Inititaion script"
+    sleep 2
     docker exec cli scripts/script.sh $CHANNEL_NAME $CLI_DELAY $LANGUAGE $CLI_TIMEOUT $VERBOSE
     if [ $? -ne 0 ]; then
       echo "ERROR !!!! Test failed"
       exit 1
     fi
+    echo "Launching chaincode Install script"
+    sleep 2
+    docker exec cli scripts/InstallMyCC.sh
   }
 ##################################################################################################################
 # Tear down running network
